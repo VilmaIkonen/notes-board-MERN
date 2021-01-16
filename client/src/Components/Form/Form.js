@@ -28,22 +28,32 @@ const Form = ({currentId, setCurrentId}) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if(currentId) {
       dispatch(updatePost(currentId, postData));
     }
     else {
       dispatch(createPost(postData));
-    }    
+    }   
+    clear(); 
   }
 
-  const clear = () => {}
+  // Clear the form after editing and posting
+  const clear = () => {
+    setCurrentId(null);
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: '' 
+    })
+  }
 
   return (
     <Paper className={classes.paper}>
     {/* classes.root/classes.form --> Multiple templates w template string to getstyling from MUI to both root and form (see styles.css) */}
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}> 
-        <Typography variant="h6">Creating a note</Typography>
+        <Typography variant="h6">{currentId ? 'Edit the' : 'Create a'} note</Typography>
         <TextField 
           name="creator" 
           variant="outlined" 
