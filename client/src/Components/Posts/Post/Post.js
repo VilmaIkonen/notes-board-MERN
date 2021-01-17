@@ -7,7 +7,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment'; // To set timestamp for the post --> .fromNow --> eg. "5 minutes ago"
 import { useDispatch } from 'react-redux';
 
-import { deletePost } from '../../../actions/posts'
+import { deletePost, likePost } from '../../../actions/posts'
 
 const Post = ({post, setCurrentId}) => {
   const classes = useStyles();
@@ -22,10 +22,7 @@ const Post = ({post, setCurrentId}) => {
       </div>
       <div className={classes.overlay2}>
         {/* Edit button connected to Form.js and to post update */}
-        <Button 
-          style={{color: 'white'}} 
-          size="small" 
-          onClick={() => setCurrentId(post._id)}>
+        <Button style={{color: 'white'}} size="small" onClick={() => setCurrentId(post._id)}>
           <MoreHorizIcon fontSize="default" />
           Edit
         </Button>
@@ -38,15 +35,12 @@ const Post = ({post, setCurrentId}) => {
         <Typography className={classes.message} variant="body1" gutterBottom>{post.message}</Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size="small" color="primary" onClick={() =>{}}>
+        <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}>
           <ThumbUpAltIcon fontSize="small"/>
           Like
           {post.likeCount}
         </Button>
-        <Button 
-          size="small" 
-          color="primary" 
-          onClick={() => dispatch(deletePost(post._id))}>
+        <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon fontSize="small"/>
           Delete
         </Button>
