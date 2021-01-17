@@ -23,14 +23,18 @@ const Post = ({post, setCurrentId}) => {
           size="small" 
           onClick={() => setCurrentId(post._id)}>
           <MoreHorizIcon fontSize="default" />
+          Edit
         </Button>
       </div>
+      <CardContent>
+        <Typography className={classes.title} variant="h5" gutterBottom>{post.title}</Typography>
+      </CardContent>
+      <CardContent>
+        <Typography className={classes.message} variant="body1" gutterBottom>{post.message}</Typography>
+      </CardContent>
       <div className={classes.details}>
         <Typography variant="body2" color="black">{post.tags.map((tag) => `#${tag} `)}</Typography>
       </div>
-      <CardContent>
-        <Typography className={classes.title} variant="h5" gutterBottom>{post.message}</Typography>
-      </CardContent>
       <CardActions className={classes.cardActions}>
         <Button size="small" color="primary" onClick={() =>{}}>
           <ThumbUpAltIcon fontSize="small"/>
