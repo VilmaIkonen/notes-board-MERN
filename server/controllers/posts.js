@@ -32,7 +32,7 @@ export const createPost = async (req, res) => {
 
 // Get post from route eg. /post/123
 // rename id to _id
-// update logic handled on client side on Form.js
+// Update logic handled on client side on Form.js
 export const updatePost = async (req, res) => {
   const {id: _id} = req.params;
   const post = req.body
@@ -44,8 +44,19 @@ export const updatePost = async (req, res) => {
   res.json(updatedPost);
 }
 
-// Delete post
+// Like
+export const likePost = async (req, res) => {
+  const {id} = req.params;
 
+  if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post found with id ${id}.`);
+
+  const post = await PostMessage.findById(id);
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
+
+  res.json(updatedPost);
+}
+
+// Delete post
 export const deletePost = async (req, res) => {
   const {id} = req.params;
 
@@ -57,13 +68,3 @@ export const deletePost = async (req, res) => {
 
 }
 
-export const likePost = async (req, res) => {
-  const {id} = req.params;
-
-  if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post found with id ${id}.`);
-
-  const post = await PostMessage.findById(id);
-  const updatedPost = PostMessage.findByIdAndUpdate(id, {likeCount: post.likeCount + 1}, {new: true});
-
-  res.json(updatedPost);
-}
